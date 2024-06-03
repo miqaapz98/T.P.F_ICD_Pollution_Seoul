@@ -203,6 +203,19 @@ mod6 <- lm(NO2 ~ CO *season + region ,gas_no2_co)
 mod7 <- lm(NO2 ~ CO *year ,gas_no2_co)
 summary(mod_NO2_CO_y)
 
+
+# MODELADOS 
+
+mod1 <- lm(NO2 ~ CO ,gas_no2_co)
+mod2 <- lm(NO2 ~ CO + region ,gas_no2_co)
+mod3 <- lm(NO2 ~ CO * region ,gas_no2_co)
+mod4 <- lm(NO2 ~ CO + region + season ,gas_no2_co)
+mod5 <- lm(NO2 ~ CO *region * season ,gas_no2_co)
+momod6 <- lm(NO2 ~ CO *season + region ,gas_no2_co)
+
+mod7 <- lm(NO2 ~ CO *year ,gas_no2_co)
+summary(mod_NO2_CO_y)
+
 #ANOVA ------------------------
 no2_co_anova <- anova( mod1, mod2, mod3, mod4, mod5,mod6)
 
@@ -218,7 +231,7 @@ grilla_mod4 <- gas_no2_co %>%
 
 gas_no2_co <- gas_no2_co %>% add_predictions(model=mod1, var="mod0") 
 
-
+#GRAFICO PARA EL MODELADO
 mod4_graf<- ggplot(gas_no2_co) +
   geom_jitter(aes(y = NO2, x = CO), shape = 20, alpha=0.3) +
   geom_line(data = grilla_mod4, aes(y = pred, x = CO, color = season, linetype = "Modelo 4"),alpha=0.7, size = 1) +
@@ -305,4 +318,31 @@ NO2_CO_timeline <- ggplot(gas_no2_co, aes(x = fecha)) +
   scale_color_manual(name = "Gases", values = c("NO2" = "blue", "CO" = "red")) +
   theme_minimal()
 
+# RESIDUOS
 
+plot(mod4)
+
+pred_red_m4 <- data_grid(gas_no2_co,NO2, CO, season , region) %>% 
+  add_predictions(model= mod4,var="pred_mod4") %>%
+  add_residuals(model = mod4,var="resid_mod4")
+
+#Residuos en funcion de prediccion
+res_func <- ggplot(pred_red_m4, aes(x=pred_mod4, y=resid_mod4)) +
+  geom_point(alpha=0.5) + 
+  geom_hline(aes(yintercept=0), linewidth = 1.5) + 
+  geom_smooth()
+
+
+pred_red_m4 <- gas_no2_co %>%
+  add_predictions(mod4, var = "pred_mod4") %>%
+  add_residuals(mod4, var = "resid_mod4")
+
+# Graficar residuos en función de las predicciones, agrupando por region y season
+res_func <- ggplot(pred_red_m4, aes(x = pred_mod4, y = resid_mod4)) +
+  geom_point(alpha = 0.5) +
+  geom_hline(aes(yintercept = 0), linewidth = 1.5) +
+  geom_smooth(method = "loess") +
+  labs(title = "Residuos vs Predicciones por Region y Season",
+       x = "Predicciones",
+       y = "Residuos") +
+  theme_minimal()
