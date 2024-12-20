@@ -13,7 +13,7 @@ Presentation Links:
 Presentation 1: https://drive.google.com/file/d/1h33jbNP_c5cQm2ympTO2CEjFwfL0-9DV/view?usp=sharing
 Presentation 2: https://drive.google.com/file/d/1BX5xz0TzMXOjbvpd9bVutHW4VkrwfxEH/view?usp=sharing
 
-# Seoul-Air-Pollution  --------------------------------------------------------------------------------------------------------------------------------------
+# Seoul-Air-Pollution  --------------------------------------------------------
 Trabajo final de la materia ICD 1C del 2024, Universidad Nacional de San Martin
 - En el siguiente trabajo práctico se busca analizar las emisiones de gases contaminantes (CO, NO2, O3 y SO2) en la región de Seúl, teniendo en cuenta los problemas qué generan  a nivel global ya que afectan la calidad del aire y la salud pública.
   
